@@ -1,0 +1,17 @@
+{
+    "name": "uniga/ppdbmvc",
+    "description": "Latihan membuat PHP MVC Framework dengan Composer",
+    "type": "project",
+    "autoload": {
+        "psr-4": {
+            "app\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "chrosxz",
+            "email": "chrosxz@gmail.com"
+        }
+    ],
+    "require": {}
+}
