@@ -23,13 +23,13 @@ class Application
     self::$app = $this;                                                       //menyimpan instance class Application ke property static $app
     $this->request = new Request();
     $this->response = new Response();
-    $this->router = new Router($this->request);
+    
 
     /*
     $this->router = new Router();
     $this->request = new Request();
     */
-    $this->router = new Router($this->request);
+    $this->router = new Router($this->request, $this->response);
 
   }
 

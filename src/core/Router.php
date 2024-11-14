@@ -21,9 +21,9 @@ class Router
   ** @param \app\core\Request $request
   ** @param \app\core\Response $response
   */
-  public function __construct(\app\core\Request $request){
+  public function __construct(Request $request, Response $response){
     $this->request = $request;
-    //$this->response = $response;
+    $this->response = $response;
   }
 
   /*
@@ -55,8 +55,8 @@ class Router
     $callback = $this->routes[$method][$path] ?? false;                                   //Jika route = null maka isi dengan false
 
     if ($callback === false){
-      Application::$app->response->setStatusCode(404);
-      //$this->response->setStatusCode(404);                                                //Set status code (http_response_code)
+      //Application::$app->response->setStatusCode(404);
+      $this->response->setStatusCode(404);
       return "Not Found";
     }
 
