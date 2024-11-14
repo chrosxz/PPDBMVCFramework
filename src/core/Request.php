@@ -3,18 +3,18 @@
 namespace app\core;
 
 /**
- * @class Request
- * @author chrosxz-alfin-bisma
- * @package app\
- * @subpackage app\core\
- * @description digunakan untuk menangani permintaan super global variabel $_SERVER['REQUEST_URI'] dan $_SERVER['PATH_INFO']
- */
+** @class Request
+** @author chrosxz-alfin-bisma
+** @package app\
+** @subpackage app\core\
+** @description digunakan untuk menangani permintaan super global variabel $_SERVER['REQUEST_URI'] dan $_SERVER['PATH_INFO']
+*/
 class Request
 {
   /* @function getPath 
-   * @return string
-   * @description Mengambil nilai $_SERVER['REQUEST_URI'] atau dari URL
-   */
+  ** @return string
+  ** @description Mengambil nilai $_SERVER['REQUEST_URI'] atau dari URL
+  */
 
   public function getPath(){
     $path = $_SERVER['REQUEST_URI'] ?? '/';                                   //diasumsukan bahwa isinya adalah kosong (false) atau sama dengan '/'
@@ -30,9 +30,9 @@ class Request
   }
 
   /* @function getMethod
-   * @return string
-   * @description Mengambil nilai $_SERVER['REQUEST_METHOD'] atau dari URL (GET atau POST)
-   */
+  ** @return string
+  ** @description Mengambil nilai $_SERVER['REQUEST_METHOD'] atau dari URL (GET atau POST)
+  */
   public function getMethod(){
     
     return strtolower($_SERVER['REQUEST_METHOD']);

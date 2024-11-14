@@ -2,13 +2,13 @@
 
 namespace app\core;
 
-/**
- * @class Router
- * @author chrosxz-alfin-bisma
- * @package app\
- * @subpackage app\core\
- * @description Dipergunakan untuk mengatur rute (route) pemanggilan fungsi berdasarkan path URI
- */
+/*
+** @class Router
+** @author chrosxz-alfin-bisma
+** @package app\
+** @subpackage app\core\
+** @description Dipergunakan untuk mengatur rute (route) pemanggilan fungsi berdasarkan path URI
+*/
 
 class Router
 {
@@ -27,19 +27,29 @@ class Router
   }
 
   /*
-  * Method yang menangani method GET
-  * @param string $path
-  * @param callable $callback
-  * @description Menambahkan route yang menangani method GET
+  ** Method yang menangani method GET
+  ** @param string $path
+  ** @param callable $callback
+  ** @description Menambahkan route yang menangani method GET
   */
   public function get($path, $callback){
     $this->routes['get'][$path] = $callback;
     
   }
 
+  /* Method yang menangani method POST
+  ** @param string $path
+  ** @param callable $callback
+  ** @description Menambahkan route yang menangani method POST
+  */
+  public function post($path, $callback){
+    $this->routes['post'][$path] = $callback;
+    
+  }
+
   /*
-  * Method yang menjalankan aksi
-  * @description Pengambilan router berdasarkan path dan menjalankan method yang sesuai
+  ** Method yang menjalankan aksi
+  ** @description Pengambilan router berdasarkan path dan menjalankan method yang sesuai
   */
   public function resolve(){
         
@@ -47,10 +57,10 @@ class Router
     $method = $this->request->getMethod();                                                //Ambil nama method yang diinginkan dari URI
 
     /*
-    * Periksa apakah di dalam array routes terdapat pethod (get/post)
-    * yang sesuai dengan method dan path yang diinginkan
-    * Jika ada, panggil fungsi yang terkait
-    * Jika tidak, tampilkan pesan "Not Found" atau router method dan path tidak ditemukan
+    ** Periksa apakah di dalam array routes terdapat pethod (get/post)
+    ** yang sesuai dengan method dan path yang diinginkan
+    ** Jika ada, panggil fungsi yang terkait
+    ** Jika tidak, tampilkan pesan "Not Found" atau router method dan path tidak ditemukan
     */
     $callback = $this->routes[$method][$path] ?? false;                                   //Jika route = null maka isi dengan false
 
@@ -68,10 +78,10 @@ class Router
   }
 
   /*
-  * Method yang menampilkan views
-  * @param string $view
-  * @description Mengambil file view yang diinginkan kemudian dimasukkan (injection) ke dalam tampilan utama
-  * Jadi pada view yang diinginkan tidak perlu membuat pengulangn script yang sama seperti header, menu, dan footer
+  ** Method yang menampilkan views
+  ** @param string $view
+  ** @description Mengambil file view yang diinginkan kemudian dimasukkan (injection) ke dalam tampilan utama
+  ** Jadi pada view yang diinginkan tidak perlu membuat pengulangn script yang sama seperti header, menu, dan footer
   */
   public function renderView($view){
 
@@ -84,12 +94,12 @@ class Router
   }
 
   /*
-  * Method yang mengambil output tampilan utama (php html)
-  * @description Mengambil output tampilan utama yang diletakkan di file main.php
-  * Biasanya berisi html (tanpa bagian utama / content) yang terdiri dari:
-  * - Header
-  * - Menu
-  * - Footer
+  ** Method yang mengambil output tampilan utama (php html)
+  ** @description Mengambil output tampilan utama yang diletakkan di file main.php
+  ** Biasanya berisi html (tanpa bagian utama / content) yang terdiri dari:
+  ** - Header
+  ** - Menu
+  ** - Footer
   */
   protected function layoutContent(){
     ob_start();                                                                           //start output caching view

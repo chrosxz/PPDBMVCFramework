@@ -2,13 +2,13 @@
 
 namespace app\core;
 
-/**
- * @class Application
- * @author chrosxz-alfin-bisma
- * @package app\
- * @subpackage app\core\
- * @description Dipergunakan sebagai class utama
- */
+/*
+** @class Application
+** @author chrosxz-alfin-bisma
+** @package app\
+** @subpackage app\core\
+** @description Dipergunakan sebagai class utama
+*/
 class Application
 {
   public static string $ROOT_DIR;
@@ -26,8 +26,8 @@ class Application
     
 
     /*
-    $this->router = new Router();
-    $this->request = new Request();
+    ** $this->router = new Router();
+    ** $this->request = new Request();
     */
     $this->router = new Router($this->request, $this->response);
 
