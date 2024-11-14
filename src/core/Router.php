@@ -13,10 +13,17 @@ namespace app\core;
 class Router
 {
   public Request $request;
+  public Response $response;
   protected array $routes = [];
 
+  /*
+  ** Router Constructor
+  ** @param \app\core\Request $request
+  ** @param \app\core\Response $response
+  */
   public function __construct(\app\core\Request $request){
     $this->request = $request;
+    //$this->response = $response;
   }
 
   /*
@@ -43,35 +50,56 @@ class Router
     * Periksa apakah di dalam array routes terdapat pethod (get/post)
     * yang sesuai dengan method dan path yang diinginkan
     * Jika ada, panggil fungsi yang terkait
-    * Jika tidak, tampilkan pesan "Route not found" dan keluar program
+    * Jika tidak, tampilkan pesan "Not Found" atau router method dan path tidak ditemukan
     */
-    $callback = $this->routes[$method][$path] ?? false;
+    $callback = $this->routes[$method][$path] ?? false;                                   //Jika route = null maka isi dengan false
 
     if ($callback === false){
-      return "Route not found";
-      exit;
+      Application::$app->response->setStatusCode(404);
+      //$this->response->setStatusCode(404);                                                //Set status code (http_response_code)
+      return "Not Found";
     }
 
-      if (is_string($callback)){
-        return $this->renderViews($callback);
-      }
+    if (is_string($callback)){                                                            //Periksa apakah $callback berisi string
+      return $this->renderView($callback);                                               //Panggil fungsi renderview sesuai dengan isi $callback
+    }
+
     return call_user_func($callback);
   }
 
-  public function renderViews($view){
-    // Implementasi render views sesuai kebutuhan
-    // Contoh:
-    // return file_get_contents(self::$ROOT_DIR. '/views/'. $view. '.php');
+  /*
+  * Method yang menampilkan views
+  * @param string $view
+  * @description Mengambil file view yang diinginkan kemudian dimasukkan (injection) ke dalam tampilan utama
+  * Jadi pada view yang diinginkan tidak perlu membuat pengulangn script yang sama seperti header, menu, dan footer
+  */
+  public function renderView($view){
 
-    $layoutContent = $this->layoutContent();
-    include_once Application::$ROOT_DIR . "/src/views/$view.php";
+    $layoutContent = $this->layoutContent();                                              //ambil output tampilan utama (php html)
+    $viewContent = $this->renderOnlyView($view);                                   //ambil output content
+
+    //Masukkan (inject) output content ke dalam output view pada bagian {{content}}
+    //Caranya adalah dengan me-replace bagian {{content}} pada main content dengan bagian output content
+    return str_replace('{{content}}', $viewContent, $layoutContent);
   }
 
+  /*
+  * Method yang mengambil output tampilan utama (php html)
+  * @description Mengambil output tampilan utama yang diletakkan di file main.php
+  * Biasanya berisi html (tanpa bagian utama / content) yang terdiri dari:
+  * - Header
+  * - Menu
+  * - Footer
+  */
   protected function layoutContent(){
-    // Implementasi layout content sesuai kebutuhan
-    // Contoh:
-    // return file_get_contents(self::$ROOT_DIR. '/views/layouts/main.php');
+    ob_start();                                                                           //start output caching view
+    include_once Application::$ROOT_DIR . "/src/views/layouts/main.php";                  //tambahkan output scipt tampilan utama (php html)
+    return ob_get_clean();                                                                //bersihkan output cache view
+  }
 
-    include_once Application::$ROOT_DIR . "/src/views/layouts/main.php";
+  protected function renderOnlyView($view){
+    ob_start();                                                                           //start output caching view
+    include_once Application::$ROOT_DIR . "/src/views/$view.php";                         //tambahkan output scipt tampilan utama (php html)
+    return ob_get_clean();                                                                //bersihkan output cache view
   }
 }

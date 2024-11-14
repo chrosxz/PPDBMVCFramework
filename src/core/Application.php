@@ -9,20 +9,26 @@ namespace app\core;
  * @subpackage app\core\
  * @description Dipergunakan sebagai class utama
  */
-
 class Application
 {
   public static string $ROOT_DIR;
   public Router $router;
   public Request $request;
+  public Response $response;
+  public static Application $app;                                                 //property static dari class Application
 
   public function __construct($rootPath){
+    
+    self::$ROOT_DIR = $rootPath;
+    self::$app = $this;                                                       //menyimpan instance class Application ke property static $app
+    $this->request = new Request();
+    $this->response = new Response();
+    $this->router = new Router($this->request);
+
     /*
     $this->router = new Router();
     $this->request = new Request();
     */
-    self::$ROOT_DIR = $rootPath;
-    $this->request = new Request();
     $this->router = new Router($this->request);
 
   }

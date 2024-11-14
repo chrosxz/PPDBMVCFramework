@@ -1,6 +1,7 @@
 <?php
 
 namespace app\core;
+
 /**
  * @class Request
  * @author chrosxz-alfin-bisma
@@ -8,7 +9,6 @@ namespace app\core;
  * @subpackage app\core\
  * @description digunakan untuk menangani permintaan super global variabel $_SERVER['REQUEST_URI'] dan $_SERVER['PATH_INFO']
  */
-
 class Request
 {
   /* @function getPath 
